@@ -1,0 +1,41 @@
+{
+  "name": "@deltastream/sdk",
+  "version": "0.0.1",
+  "description": "Official DeltaStream sdk for Node.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "scripts": {
+    "build": "tsup",
+    "lint": "tsc",
+    "dev": "vitest",
+    "test": "vitest run",
+    "ci": "pnpm run lint && pnpm run test && pnpm run build",
+    "release": "pnpm run lint && pnpm run test && pnpm run build && changeset publish"
+  },
+  "keywords": [
+    "deltastream",
+    "kafka",
+    "streaming",
+    "realtime"
+  ],
+  "author": "DeltaStream Inc.",
+  "license": "Apache-2.0",
+  "homepage": "https://deltastream.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deltastreaminc/ts-deltastream"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@types/node": "^20.10.8",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {}
+}
