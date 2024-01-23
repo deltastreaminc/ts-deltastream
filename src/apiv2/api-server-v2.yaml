@@ -1,0 +1,401 @@
+openapi: 3.0.3
+info:
+  version: '2.0.0'
+  title: DeltaStream REST API
+servers:
+  - url: https://api.deltastream.io/v2
+components:
+  schemas:
+    StatementRequest:
+      type: object
+      properties:
+        statement:
+          description: "DeltaStream SQL statement or batch of SQL statements to execute"
+          type: string
+        organization:
+          description: "Organization Name or ID in which the statement should be executed"
+          type: string
+        role:
+          description: "Role to use when executing a statement. This value is case sensitive"
+          type: string
+        database:
+          description: "Database to add to search path for name resolution. This value is case sensitive"
+          type: string
+        schema:
+          description: "Database schema to add to search path for name resolution. This value is case sensitive"
+          type: string
+        store:
+          description: "Store to add to search path for name resolution. This value is case sensitive"
+          type: string
+        # bindings:
+        #   type: object
+        #   properties: {}
+        #   example:
+        #     "1":
+        #       "type": "FIXED"
+        #       "value": '123'
+        #     "2":
+        #       "type": "TEXT"
+        #       "value": 'teststring'
+        parameters:
+          type: object
+          properties:
+            timezone:
+              type: string
+              example: America/New_York
+            sessionID:
+              type: string
+      required:
+        - statement
+    StatementStatus:
+      type: object
+      properties:
+        sqlState:
+          type: string
+        message:
+          type: string
+        statementID:
+          type: string
+          format: uuid
+        statementIDs:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: IDs for each statement when a multi-statement SQL is submitted
+        createdOn:
+          type: integer
+          format: int64
+          description: UTC POSIX timestamp of when statement was submitted
+      required:
+        - sqlState
+        - statementID
+        - createdOn
+    ResultSet:
+      type: object
+      properties:
+        sqlState:
+          type: string
+        message:
+          type: string
+        statementID:
+          type: string
+          format: uuid
+        statementIDs:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: IDs for each statement when a multi-statement SQL is submitted
+        createdOn:
+          type: integer
+          format: int64
+          description: UTC POSIX timestamp of when statement was submitted
+        metadata:
+          $ref: "#/components/schemas/ResultSetMetadata"
+        data:
+          type: array
+          minItems: 0
+          items:
+            type: array
+            items:
+              anyOf:
+                - type: "string"
+                - type: "null"
+                  nullable: true
+              x-go-type: "*string"
+          description: |-
+            Each item within a column of data is expressed as a string, regardless of the DeltaStream type of the column.
+            For example, the number 1.0 will be returned as "1.0".
+      required:
+        - sqlState
+        - statementID
+        - createdOn
+        - metadata
+        - data
+    ResultSetPartitionInfo:
+      type: object
+      properties:
+        rowCount:
+          type: integer
+          format: int32
+          minimum: 0
+      required:
+        - id
+        - rowCount
+    ResultSetMetadata:
+      type: object
+      properties:
+        encoding:
+          type: string
+          enum: [json]
+        partitionInfo:
+          type: array
+          items:
+            $ref: "#/components/schemas/ResultSetPartitionInfo"
+        columns:
+          $ref: "#/components/schemas/ResultSetColumns"
+        context:
+          $ref: "#/components/schemas/ResultSetContext"
+      required:
+        - encoding
+        - partitionInfo
+        - columns
+    ResultSetColumns:
+      type: array
+      minItems: 0
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+          type:
+            type: string
+          nullable:
+            type: boolean
+        required:
+          - name
+          - type
+          - nullable
+    ResultSetContext:
+      type: object
+      properties:
+        organizationID:
+          type: string
+          format: uuid
+        roleName:
+          type: string
+        databaseName:
+          type: string
+        schemaName:
+          type: string
+        storeName:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    Version:
+      type: object
+      properties:
+        major:
+          type: integer
+        minor:
+          type: integer
+        patch:
+          type: integer
+      required:
+        - "major"
+        - "minor"
+        - "patch"
+    Organization:
+      type: object
+      properties:
+        organizationID:
+          type: string
+          format: uuid
+        defaultRoleName:
+          type: string
+        grantedRoles:
+          type: array
+          items:
+            type: string
+        inheritedRoles:
+          type: array
+          items:
+            type: string
+      required:
+        - organizationID
+        - defaultRoleName
+  responses:
+    ErrBadRequest:
+      description: Server cannot process the request due to a client error (malformed request syntax, invalid request message etc).
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    ErrForbidden:
+      description: Server cannot process the request due to invalid token.
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    ErrNotFound:
+      description: Requested REST endpoint is not valid.
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    ErrDeadlineExceeded:
+      description: Request execution was cancelled because it exceeded the timeout value
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    ErrInternal:
+      description: Internal server error.
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    ErrServiceUnavailable:
+      description: Service is temporarily unavailable
+      content:
+        "application/json":
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+  parameters:
+    statementID:
+      schema:
+        type: string
+        format: uuid
+      name: statementID
+      in: path
+      required: true
+      allowEmptyValue: false
+    sessionID:
+      schema:
+        type: string
+      name: sessionID
+      in: query
+      allowEmptyValue: false
+    partitionID:
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+      name: partitionID
+      in: query
+      allowEmptyValue: false
+    timezone:
+      schema:
+        type: string
+        example: America/New_York
+      name: "timezone"
+      in: query
+      allowEmptyValue: false
+  securitySchemes:
+    apiToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: DeltaStream API token.
+paths:
+  /statements:
+    post:
+      tags:
+        - deltastream
+      operationId: SubmitStatement
+      description: Submit one statement for execution.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                request:
+                  $ref: '#/components/schemas/StatementRequest'
+                attachments:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - request
+            encoding:
+              request:
+                contentType: application/json
+                style: form
+              attachments:
+                contentType: application/octet-stream
+                style: form
+          "application/json":
+            schema:
+              $ref: '#/components/schemas/StatementRequest'
+      responses:
+        '200':
+          description: Statement successfully executed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultSet'
+        '202':
+          description: Statement execution is in progress. Use GET /statements/{statementID} to poll for status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatementStatus'
+        '400':
+          $ref: '#/components/responses/ErrBadRequest'
+        '403':
+          $ref: '#/components/responses/ErrForbidden'
+        '404':
+          $ref: '#/components/responses/ErrNotFound'
+        '408':
+          $ref: '#/components/responses/ErrDeadlineExceeded'
+        '500':
+          $ref: '#/components/responses/ErrInternal'
+        '503':
+          $ref: '#/components/responses/ErrServiceUnavailable'
+  /statements/{statementID}:
+    get:
+      tags:
+        - deltastream
+      operationId: GetStatementStatus
+      description: Lookup the status of a statement.
+      parameters:
+      - $ref: '#/components/parameters/statementID'
+      - $ref: '#/components/parameters/sessionID'
+      - $ref: '#/components/parameters/partitionID'
+      - $ref: '#/components/parameters/timezone'
+      responses:
+        '200':
+          description: Statement successfully executed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultSet'
+        '202':
+          description: Statement execution is in progress. Use GET /statements/{statementID} to poll for status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatementStatus'
+        '400':
+          $ref: '#/components/responses/ErrBadRequest'
+        '403':
+          $ref: '#/components/responses/ErrForbidden'
+        '404':
+          $ref: '#/components/responses/ErrNotFound'
+        '408':
+          $ref: '#/components/responses/ErrDeadlineExceeded'
+        '500':
+          $ref: '#/components/responses/ErrInternal'
+        '503':
+          $ref: '#/components/responses/ErrServiceUnavailable'
+  /version:
+    get:
+      tags:
+        - deltastream
+      description: Returns the server version
+      operationId: GetVersion
+      responses:
+        '200':
+          description: server version
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Version"
+        '403':
+          $ref: '#/components/responses/ErrForbidden'
+        '500':
+          $ref: '#/components/responses/ErrInternal'
+        '503':
+          $ref: '#/components/responses/ErrServiceUnavailable'
+security:
+  - apiToken: []

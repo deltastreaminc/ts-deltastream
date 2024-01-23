@@ -37,5 +37,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {}
+  "dependencies": {
+    "undici": "^6.4.0"
+  }
 }

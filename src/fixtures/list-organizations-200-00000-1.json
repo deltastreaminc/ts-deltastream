@@ -1,0 +1,20 @@
+{
+    "sqlState": "00000",
+    "statementID": "d789687d-4e1b-4649-846e-4f10b722f3ad",
+    "createdOn": 1703907114,
+    "metadata": {
+        "encoding": "json",
+        "partitionInfo": [{"rowCount": 1}],
+        "columns": [
+            {"name": "id", "type": "VARCHAR", "nullable": false},
+            {"name": "name", "type": "VARCHAR", "nullable": false},
+            {"name": "description", "type": "VARCHAR", "nullable": true},
+            {"name": "profileImageURI", "type": "VARCHAR", "nullable": true},
+            {"name": "createdAt", "type": "TIMESTAMP_TZ", "nullable": false}
+        ],
+        "context": {}
+    },
+    "data": [
+        ["0e0e3617-3cd6-4407-a189-97daf226c4d4", "o1", null, null, "2023-12-30 03:37:45Z"]
+    ]
+}
