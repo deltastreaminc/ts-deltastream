@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "CommonJS",
+    "module": "nodenext",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "stripInternal": true,
