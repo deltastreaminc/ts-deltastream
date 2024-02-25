@@ -48,4 +48,25 @@ describe('driver', () => {
     });
     agent.close();
   });
+
+  it('should succeed if tokenProvided is set', async () => {
+    const agent = new MockAgent();
+    agent.disableNetConnect();
+    setGlobalDispatcher(agent);
+
+    // valid token
+    agent.get('https://api.deltastream.io').intercept({
+      method: 'GET',
+      path: '/v2/version',
+      headers(headers: any) {
+        return headers['authorization'] === 'Bearer sometoken';
+      }
+    }).reply(200, { major: 2, minor: 0, patch: 0 });
+
+    let c = new Connection("https://api.deltastream.io/v2?sessionID=123", () => 'sometoken');
+    await c.ping().catch((err: any) => {
+      expect(err).toBeUndefined();
+    });
+    agent.close();
+  });
 });

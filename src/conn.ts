@@ -1,7 +1,6 @@
 import { DefaultConfig, Configuration, DeltastreamApi, ResultSet, ResultSetContext, StatementStatusFromJSON, ErrorResponseFromJSONTyped, ErrorResponseFromJSON, ResultSetContextFromJSON, ResponseError } from "./apiv2"
 import { Rows } from "./rows"
 import { Result } from "./result"
-import { error, time } from "console"
 import { AuthenticationError, InterfaceError, SQLError, ServerError, ServiceUnavailableError, SqlState, TimeoutError } from "./error"
 
 export class Connection {
@@ -14,10 +13,13 @@ export class Connection {
     rsctx: ResultSetContext
 
     // dsn := "https://_:token@api.deltastream.io/v2?sessionID=sessionID"
-    constructor(dsn: string) {
+    constructor(dsn: string, tokenProvider?: () => string) {
         const url = new URL(dsn);
-        if (url.password == "") {
-            throw new AuthenticationError("Invalid DSN: missing token")
+        if (tokenProvider == null) {
+            if (url.password == "") {
+                throw new AuthenticationError("Invalid DSN: missing token")
+            }
+            tokenProvider = () => url.password
         }
 
         this.token = url.password
@@ -29,10 +31,11 @@ export class Connection {
         if (url.searchParams.has("timezone")) {
             this.timezone = url.searchParams.get("timezone")!
         }
+
         let config = new Configuration({
             ...DefaultConfig,
             basePath: this.serverUrl,
-            accessToken: this.token,
+            accessToken: tokenProvider,
         })
         this.api = new DeltastreamApi(config)
         this.rsctx = ResultSetContextFromJSON({})
@@ -84,8 +87,8 @@ export class Connection {
     }
 }
 
-export function createConnection(dsn: string): Connection {
-    return new Connection(dsn);
+export function createConnection(dsn: string, tokenProvider?: () => string): Connection {
+    return new Connection(dsn, tokenProvider);
 }
 
 
