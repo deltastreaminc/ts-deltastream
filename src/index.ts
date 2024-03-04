@@ -1,3 +1,2 @@
-export { createConnection, Connection } from './conn';
-export { Rows, Column } from './rows';
-export { Result } from './result';
+export { Rows, APIConnection as Connection, createConnection } from "./conn";
+export { Column } from "./rows";
