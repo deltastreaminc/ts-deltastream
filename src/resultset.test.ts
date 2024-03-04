@@ -1,46 +1,46 @@
 import { describe, it, expect } from 'vitest';
-import { Connection } from './conn';
-import { fail } from 'assert';
-import { Configuration, DefaultConfig, DeltastreamApi, StatementRequestFromJSON, StatementRequest } from './apiv2';
-import { readFile, readFileSync } from 'fs';
-import { AuthenticationError } from './error';
+import { Connection, createConnection } from './index';
+import { StatementRequestFromJSON } from './apiv2';
+import { readFileSync } from 'fs';
 const { setGlobalDispatcher, MockAgent } = require('undici');
 
 
-describe('query', () => {
+
+describe('resultset', () => {
   it('should support single resultset', async () => {
     mockSubmitStatementsResponder('src/fixtures/list-organizations-200-00000-1.json', 200, 'LIST ORGANIZATIONS;');
 
     let c = new Connection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
     let rows = await c.query('LIST ORGANIZATIONS;')
-    let numRows = 0
-    do {
-      let row = await rows.fetchRow()
+    let numRows = 0;
+    for await (let row of rows) {
       expect(row).toEqual(['0e0e3617-3cd6-4407-a189-97daf226c4d4', 'o1', null, null, 1703907465000])
       numRows++;
-    } while (rows.hasNext())
+    }
+    await rows.close();
+    
     expect(numRows).toEqual(1)
   });
 
   it('should support empty resultset', async () => {
   });
 
-  it('should support selayed single resultset', async () => {
+  it('should support resultset with multiple partitions', async () => {
   });
 
-  it('should support multi statement resultset', async () => {
+  it('should support delayed single resultset', async () => {
   });
 
   it('should support simple exec query', async () => {
   });
-
+  
   it('should support query with attachments', async () => {
   });
-
-  it('should support multi statement exec query', async () => {
+  
+  it('should support query with all data types', async () => {
   });
 
-  it('should support query with all data types', async () => {
+  it('should gracefully handle closed resultset', async () => {
   });
 });
 
@@ -86,3 +86,4 @@ function mockSubmitStatementsResponder(fixture: string, statusCode: number = 200
     {headers: {'content-type': 'application/json'}},
   );
 }
+
