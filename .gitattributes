@@ -1,0 +1,12 @@
+src/apiv2/.openapi-generator/* linguist-generated=true
+src/apiv2/.openapi-generator-ignore linguist-generated=true
+src/apiv2/apis/* linguist-generated=true
+src/apiv2/models/* linguist-generated=true
+src/apiv2/index.ts linguist-generated=true
+src/apiv2/runtime.ts linguist-generated=true
+src/dpapiv2/.openapi-generator/* linguist-generated=true
+src/dpapiv2/.openapi-generator-ignore linguist-generated=true
+src/dpapiv2/apis/* linguist-generated=true
+src/dpapiv2/models/* linguist-generated=true
+src/dpapiv2/index.ts linguist-generated=true
+src/dpapiv2/runtime.ts linguist-generated=true
