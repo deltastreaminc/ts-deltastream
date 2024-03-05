@@ -1,5 +1,11 @@
 # @deltastream/sdk
 
+## 0.2.0
+
+### Minor Changes
+
+- 6958097: misc bug fixes, add resultset tests, format code
+
 ## 0.1.0
 
 ### Minor Changes
