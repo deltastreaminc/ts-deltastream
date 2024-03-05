@@ -18,11 +18,12 @@ export function castRowData(rowDataStrings: (string | null)[], columns: Column[]
     for (let i = 0; i < columns.length; i++) {
         let column = columns[i]
         if (rowDataStrings[i] == null) {
-            rowData.push(null)
-            continue
+            rowData.push(null);
+            continue;
         }
 
-        switch (column.type) {
+        const colsTypeParts = column.type.split(new RegExp(`[<>()]`))
+        switch (colsTypeParts[0]) {
             case "VARCHAR":
                 rowData.push(rowDataStrings[i])
                 break;
@@ -44,7 +45,7 @@ export function castRowData(rowDataStrings: (string | null)[], columns: Column[]
             case "DATE":
             case "TIME":
             case "TIMESTAMP_LTZ":
-                rowData.push(Date.parse(String(rowDataStrings[i])))
+                rowData.push(new Date(Date.parse(String(rowDataStrings[i]))))
                 break;
             case "VARBINARY":
             case "BYTES":
@@ -58,6 +59,8 @@ export function castRowData(rowDataStrings: (string | null)[], columns: Column[]
             case "BOOLEAN":
                 rowData.push(JSON.parse(String(rowDataStrings[i])))
                 break;
+            default:
+                console.log("Unknown type: " + column.type) 
         }
     }
     return rowData

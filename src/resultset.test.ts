@@ -1,89 +1,73 @@
 import { describe, it, expect } from 'vitest';
 import { Connection, createConnection } from './index';
-import { StatementRequestFromJSON } from './apiv2';
-import { readFileSync } from 'fs';
-const { setGlobalDispatcher, MockAgent } = require('undici');
-
-
+import { blobData } from './fixtures/handlers';
 
 describe('resultset', () => {
   it('should support single resultset', async () => {
-    mockSubmitStatementsResponder('src/fixtures/list-organizations-200-00000-1.json', 200, 'LIST ORGANIZATIONS;');
-
-    let c = new Connection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
-    let rows = await c.query('LIST ORGANIZATIONS;')
+    let c = createConnection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
+    let rows = await c.query('SINGLE PARTITION WITH ONE ROW;')
     let numRows = 0;
     for await (let row of rows) {
-      expect(row).toEqual(['0e0e3617-3cd6-4407-a189-97daf226c4d4', 'o1', null, null, 1703907465000])
+      expect(row).toEqual(['0e0e3617-3cd6-4407-a189-97daf226c4d4', 'o1', null, null, new Date(`2023-12-30T03:37:45.000Z`)])
       numRows++;
     }
     await rows.close();
-    
     expect(numRows).toEqual(1)
   });
 
-  it('should support empty resultset', async () => {
+  it('should support single resultset', async () => {
+    let c = createConnection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
+    let rows = await c.query('NO PARTITION WITH NO ROWS;')
+    let numRows = 0;
+    for await (let row of rows) {
+      numRows++;
+    }
+    await rows.close();
+    expect(numRows).toEqual(0)
   });
 
   it('should support resultset with multiple partitions', async () => {
+    let c = createConnection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
+    let rows = await c.query('MULTI PARTITION WITH 4 ROWS;')
+    let numRows = 0;
+    for await (let row of rows) {
+      numRows++;
+    }
+    await rows.close();
+    expect(numRows).toEqual(4)
   });
 
   it('should support delayed single resultset', async () => {
+    let c = createConnection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
+    let rows = await c.query('DELAYED SINGLE PARTITION WITH ONE ROW;')
+    let numRows = 0;
+    for await (let row of rows) {
+      expect(row).toEqual(['0e0e3617-3cd6-4407-a189-97daf226c4d4', 'o1', null, null, new Date(`2023-12-30T03:37:45.000Z`)])
+      numRows++;
+    }
+    await rows.close();
+    expect(numRows).toEqual(1)
   });
 
   it('should support simple exec query', async () => {
+    let c = createConnection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
+    await c.exec('SINGLE PARTITION WITH ONE ROW;')
   });
   
   it('should support query with attachments', async () => {
+    let c = createConnection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
+    await c.exec('TEST ATTACHMENT;', [new Blob([blobData], { type: 'text/plain' })]);
   });
   
   it('should support query with all data types', async () => {
-  });
-
-  it('should gracefully handle closed resultset', async () => {
+    let c = createConnection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
+    let rows = await c.query('ALL DATA TYPES;')
+    let numRows = 0;
+    for await (let row of rows) {
+      expect(row!.length).toEqual(38);
+      numRows++;
+    }
+    await rows.close();
+    expect(numRows).toEqual(4)
   });
 });
-
-function mockSubmitStatementsResponder(fixture: string, statusCode: number = 200, expectedStatement: string, expectedAttachments: string[] = []) {
-  const agent = new MockAgent();
-  agent.disableNetConnect();
-  setGlobalDispatcher(agent);
-
-  agent.get('https://api.deltastream.io').intercept({
-    method: 'POST',
-    path: '/v2/statements',
-    headers: function(headers: any) : boolean {
-      let headersMatch = headers['authorization'] === 'Bearer sometoken' && headers['content-type'].startsWith('multipart/form-data; boundary=');
-      return headersMatch;
-    },
-    body: function(body: any) : boolean {
-      let attachments: string[] = [];
-      let requestPresent = false
-      for (const pair of body.entries()) {
-        if (pair[0] === 'request') {
-          let data = pair[1];
-          requestPresent = true;
-          data.text().then((text: string) => {
-            let request = StatementRequestFromJSON(JSON.parse(text));
-            if (request.statement !== expectedStatement) {
-              throw new Error(`Expected statement ${expectedStatement}, got ${request.statement}`);
-            }
-          });
-        }
-        if (pair[0] === 'attachments') {
-          let data = pair[1];
-          attachments.push(data.name);
-        }
-      }
-      if (JSON.stringify(expectedAttachments) !== JSON.stringify(attachments)) {
-        return false
-      }
-      return requestPresent;
-    },
-  }).reply(
-    statusCode,
-    JSON.parse(readFileSync(fixture, 'utf8')),
-    {headers: {'content-type': 'application/json'}},
-  );
-}
-

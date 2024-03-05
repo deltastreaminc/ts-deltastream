@@ -41,8 +41,8 @@ export class ResultsetRows implements Rows{
                     this.currentResultSet = await this.stmtHandler.getStatementStatus(this.currentResultSet.statementID, partIdx);
                     this.currentPartitionIdx = partIdx;
                 }
-                this.currentRowIdx = rowIdx;
-                const row = castRowData(this.currentResultSet.data![this.currentRowIdx] as (string | null)[], this.columns());
+                this.currentRowIdx++;
+                const row = castRowData(this.currentResultSet.data![rowIdx] as (string | null)[], this.columns());
                 return { value: row, done: false };
             }
         }

@@ -5,7 +5,7 @@ import { Deferred } from "./deferred";
 import { DPAPIConnection } from "./dpconn";
 import { InterfaceError, SQLError } from "./error";
 import { castRowData, Column } from "./rows";
-import { WebSocket } from "isomorphic-ws";
+import WebSocket from 'isomorphic-ws';
 
 interface PrintTopicMetadata{
     type: string
@@ -39,7 +39,10 @@ export class StreamingRows implements Rows {
     constructor(conn: DPAPIConnection, req: DataplaneRequest) {
         this.conn = conn;
         this.req = req;
+
         this.ws = new WebSocket(this.req.uri);
+        console.log("xxx", this.ws)
+        
         this.rows = [];
     }
 
@@ -49,14 +52,12 @@ export class StreamingRows implements Rows {
         this.rows = []
 
         ws.onopen = () => {
-            console.log("sending auth");
             ws.send(JSON.stringify({ type: "auth", "accessToken": this.conn.token, "sessionId": this.conn.sessionID }));
         };
 
         let deferredReady: Deferred<void, ErrorMessage> | undefined = new Deferred<void, ErrorMessage>()
 
         ws.onmessage = (event) => {
-            console.log(event);
             const data = JSON.parse(event.data as string);
             switch (data.type) {
                 case "metadata":
