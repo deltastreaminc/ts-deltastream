@@ -6,7 +6,7 @@ export default defineConfig({
     include: ['src/**/*.test.ts'],
     coverage: {
       provider: 'istanbul',
-      reporter: ['html', 'clover']
+      reporter: ['html', 'clover'],
     },
   },
 });

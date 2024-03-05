@@ -1,4 +1,4 @@
-import { defineWorkspace } from 'vitest/config'
+import { defineWorkspace } from 'vitest/config';
 
 export default defineWorkspace([
   {
@@ -10,18 +10,18 @@ export default defineWorkspace([
         name: 'chrome',
         enabled: true,
         provider: 'webdriverio',
-        headless: true
+        headless: true,
       },
       setupFiles: ['./src/fixtures/msw/browser.ts'],
       // testTimeout: 300000,
-    }
+    },
   },
   {
     extends: './vitest.config.ts',
     test: {
       name: 'node',
       environment: 'node',
-      setupFiles: ['./src/fixtures/msw/node.ts']
-    }
-  }
-])
+      setupFiles: ['./src/fixtures/msw/node.ts'],
+    },
+  },
+]);
