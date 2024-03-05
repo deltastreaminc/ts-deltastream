@@ -21,13 +21,59 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm changeset status --verbose
+
+      - run: |-
+          echo "```" > /tmp/summary 
+          pnpm changeset status --verbose | tee -a /tmp/summary
+          echo "```" >> /tmp/summary
+
       - run: pnpm changeset version
+
+      - uses: actions/github-script@v7
+        id: create-pr-branch
+        name: Create PR branch
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+              try {
+                await github.rest.git.createRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: 'refs/heads/version-packages',
+                  sha: '${{ github.sha }}'
+                });
+              } catch (error) {
+                await github.rest.git.updateRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: 'heads/version-packages',
+                  sha: '${{ github.sha }}',
+                  force: true
+                });
+              }
 
       - uses: planetscale/ghcommit-action@v0.1.6
         with:
           commit_message: "Version packages"
           repo: ${{ github.repository }}
-          branch: ${{ github.head_ref || github.ref_name }}
+          branch: "version-packages"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - uses: actions/github-script@v7
+        id: create-pr
+        name: Create PR
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('/tmp/summary', 'utf-8');
+
+            await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Version packages',
+              head: 'version-packages',
+              base: 'main',
+              body: body
+            });
