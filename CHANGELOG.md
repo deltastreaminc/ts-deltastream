@@ -1,5 +1,11 @@
 # @deltastream/sdk
 
+## 0.3.0
+
+### Minor Changes
+
+- b048d6f: fix tsc issues
+
 ## 0.2.0
 
 ### Minor Changes
