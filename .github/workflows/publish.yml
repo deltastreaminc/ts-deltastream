@@ -14,17 +14,20 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
+
       - uses: actions/setup-node@v3
         with:
           node-version: 21.x
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
-      - name: Create Release Pull Request or Publish
-        id: changesets
-        uses: changesets/action@v1
+      - run: pnpm changeset status --verbose
+      - run: pnpm changeset version
+
+      - uses: planetscale/ghcommit-action@v0.1.6
         with:
-          publish: pnpm run release
+          commit_message: "Version packages"
+          repo: ${{ github.repository }}
+          branch: ${{ github.head_ref || github.ref_name }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

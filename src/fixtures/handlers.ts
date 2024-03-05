@@ -398,25 +398,25 @@ const streamingResultset = {
 //#endregion
 
 export const handlers = [
-  http.get('https://api.deltastream.io/v2/version', (r) => {
+  http.get<any, any, any>('https://api.deltastream.io/v2/version', (r) => {
     if (r.request.headers.get('authorization') !== 'Bearer sometoken') {
       return HttpResponse.json({ message: 'no token' }, { status: 401 });
     }
     return HttpResponse.json({ major: 2, minor: 0, patch: 0 });
   }),
 
-  http.post('https://api.deltastream.io/v2/statements', async (r) => {
+  http.post<any, any, any>('https://api.deltastream.io/v2/statements', async (r) => {
     if (r.request.headers.get('authorization') !== 'Bearer sometoken') {
       return HttpResponse.json({ message: 'no token' }, { status: 401 });
     }
     const body = await r.request.formData();
     const stmtReq = JSON.parse(
-      await body.get('request')?.text()
+      await (body.get('request') as File).text()
     ) as StatementRequest;
     switch (stmtReq.statement) {
       case `DELAYED SINGLE PARTITION WITH ONE ROW;`:
         return HttpResponse.json(delayedSingleResponsePartition0, {
-          status: 202,
+          'status': 202,
         });
       case `SINGLE PARTITION WITH ONE ROW;`:
         return HttpResponse.json(singleResponsePartition0);
@@ -428,14 +428,15 @@ export const handlers = [
         const attachments = body.getAll('attachments');
         if (attachments.length !== 1) {
           return HttpResponse.json(
-            { message: 'expected 1 attachment' },
-            { status: 500 }
+            { 'message': 'expected 1 attachment' },
+            { 'status': 500 }
           );
         }
-        if ((await attachments[0].text()) !== blobData) {
+        const f = await attachments[0] as File;
+        if (await f.text() !== blobData) {
           return HttpResponse.json(
-            { message: 'bob content does not match' },
-            { status: 500 }
+            { 'message': 'bob content does not match' },
+            { 'status': 500 }
           );
         }
         return HttpResponse.json(noRowsResponse);
@@ -448,13 +449,13 @@ export const handlers = [
       }
       default:
         return HttpResponse.json(
-          { message: 'unknown statement' },
-          { status: 500 }
+          { 'message': 'unknown statement' },
+          { 'status': 500 }
         );
     }
   }),
 
-  http.get(
+  http.get<any, any, any>(
     'https://api.deltastream.io/v2/statements/:statementId',
     async (r) => {
       if (r.request.headers.get('authorization') !== 'Bearer sometoken') {
@@ -469,8 +470,8 @@ export const handlers = [
               return HttpResponse.json(singleResponsePartition0);
             default:
               return HttpResponse.json(
-                { message: 'unknown partition' },
-                { status: 500 }
+                { 'message': 'unknown partition' },
+                { 'status': 500 }
               );
           }
         }
@@ -484,15 +485,15 @@ export const handlers = [
               return HttpResponse.json(multiResponsePartition1);
             default:
               return HttpResponse.json(
-                { message: 'unknown partition' },
-                { status: 500 }
+                { 'message': 'unknown partition' },
+                { 'status': 500 }
               );
           }
         }
         default:
           return HttpResponse.json(
-            { message: 'unknown statement' },
-            { status: 500 }
+            { 'message': 'unknown statement' },
+            { 'status': 500 }
           );
       }
     }
