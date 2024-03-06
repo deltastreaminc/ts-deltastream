@@ -3,12 +3,15 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.check.read-status.publish }}
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -19,15 +22,28 @@ jobs:
         with:
           node-version: 21.x
           cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
 
       - run: pnpm install --frozen-lockfile
 
-      - run: |-
-          pnpm changeset status --verbose | tee /tmp/summary
-
-      - run: pnpm changeset version
+      - run: pnpm changeset status --output=status.json
 
       - uses: actions/github-script@v7
+        id: require-pr
+        with:
+          result-encoding: string
+          script: |
+            const fs = require('fs');
+            const statusStr = fs.readFileSync('status.json', 'utf-8');
+            const status = JSON.parse(statusStr);
+            return status.changesets.length > 0 ? 'true' : 'false'
+
+      - run: |-
+          pnpm changeset status --verbose | tee /tmp/summary
+        if: steps.require-pr.outputs.result == 'true'
+
+      - uses: actions/github-script@v7
+        if: steps.require-pr.outputs.result == 'true'
         id: create-pr-branch
         name: Create PR branch
         with:
@@ -51,6 +67,7 @@ jobs:
               }
 
       - uses: planetscale/ghcommit-action@v0.1.6
+        if: steps.require-pr.outputs.result == 'true'
         with:
           commit_message: "Version packages"
           repo: ${{ github.repository }}
@@ -59,6 +76,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - uses: actions/github-script@v7
+        if: steps.require-pr.outputs.result == 'true'
         id: create-pr
         name: Create PR
         with:
@@ -75,3 +93,12 @@ jobs:
               base: 'main',
               body: '```' + body + '```'
             });
+
+      - run: |-
+          pnpm run release
+          git push origin main --tags
+        if: steps.require-pr.outputs.result == 'false'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
