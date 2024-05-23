@@ -1,5 +1,11 @@
 # @deltastream/sdk
 
+## 0.4.0
+
+### Minor Changes
+
+- b7e101d: Allow org,role,db,schema,store context to be set via DSN
+
 ## 0.3.0
 
 ### Minor Changes
