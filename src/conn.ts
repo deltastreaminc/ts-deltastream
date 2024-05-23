@@ -88,7 +88,23 @@ export class APIConnection implements StatementHandler, Connection {
       accessToken: tokenProvider,
     });
     this.api = new DeltastreamApi(config);
+
     this.rsctx = ResultSetContextFromJSON({});
+    if (url.searchParams.has('organizationID')) {
+      this.rsctx.organizationID = url.searchParams.get('organizationID')!;
+    }
+    if (url.searchParams.has('roleName')) {
+      this.rsctx.roleName = url.searchParams.get('roleName')!;
+    }
+    if (url.searchParams.has('databaseName')) {
+      this.rsctx.databaseName = url.searchParams.get('databaseName')!;
+    }
+    if (url.searchParams.has('schemaName')) {
+      this.rsctx.schemaName = url.searchParams.get('schemaName')!;
+    }
+    if (url.searchParams.has('storeName')) {
+      this.rsctx.storeName = url.searchParams.get('storeName')!;
+    }
   }
 
   async exec(query: string, attachments?: Blob[]): Promise<null> {
