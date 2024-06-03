@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "isomorphic-ws": "^5.0.0",
+    "mathjs": "^12.4.2",
     "undici": "^6.7.0",
     "ws": "^8.16.0"
   },

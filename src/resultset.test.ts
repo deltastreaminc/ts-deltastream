@@ -92,7 +92,7 @@ describe('resultset', () => {
     let rows = await c.query('ALL DATA TYPES;');
     let numRows = 0;
     for await (let row of rows) {
-      expect(row!.length).toEqual(38);
+      expect(row!.length).toEqual(39);
       numRows++;
     }
     await rows.close();

@@ -1,3 +1,5 @@
+import { bignumber } from 'mathjs'
+
 export class Column {
   public name: string;
   public nullable: boolean;
@@ -43,7 +45,7 @@ export function castRowData(
         rowData.push(parseInt(String(rowDataStrings[i])));
         break;
       case 'BIGINT':
-        rowData.push(BigInt(String(rowDataStrings[i])));
+        rowData.push(bignumber(rowDataStrings[i]));
         break;
       case 'FLOAT':
       case 'DOUBLE':
