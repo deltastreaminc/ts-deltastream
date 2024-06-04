@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Connection, createConnection } from './index.ts';
+import { createConnection } from './index.ts';
 import { blobData } from './fixtures/handlers.ts';
 
 describe('resultset', () => {

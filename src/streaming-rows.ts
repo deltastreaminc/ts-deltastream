@@ -1,4 +1,3 @@
-import { deflateRaw } from 'zlib';
 import { DataplaneRequest } from './apiv2/index.ts';
 import { Rows } from './conn.ts';
 import { Deferred } from './deferred.ts';
