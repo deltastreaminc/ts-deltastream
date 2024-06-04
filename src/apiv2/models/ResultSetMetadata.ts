@@ -12,31 +12,31 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { DataplaneRequest } from './DataplaneRequest';
+import { exists, mapValues } from '../runtime.ts';
+import type { DataplaneRequest } from './DataplaneRequest.ts';
 import {
   DataplaneRequestFromJSON,
   DataplaneRequestFromJSONTyped,
   DataplaneRequestToJSON,
-} from './DataplaneRequest';
-import type { ResultSetColumnsInner } from './ResultSetColumnsInner';
+} from './DataplaneRequest.ts';
+import type { ResultSetColumnsInner } from './ResultSetColumnsInner.ts';
 import {
   ResultSetColumnsInnerFromJSON,
   ResultSetColumnsInnerFromJSONTyped,
   ResultSetColumnsInnerToJSON,
-} from './ResultSetColumnsInner';
-import type { ResultSetContext } from './ResultSetContext';
+} from './ResultSetColumnsInner.ts';
+import type { ResultSetContext } from './ResultSetContext.ts';
 import {
   ResultSetContextFromJSON,
   ResultSetContextFromJSONTyped,
   ResultSetContextToJSON,
-} from './ResultSetContext';
-import type { ResultSetPartitionInfo } from './ResultSetPartitionInfo';
+} from './ResultSetContext.ts';
+import type { ResultSetPartitionInfo } from './ResultSetPartitionInfo.ts';
 import {
   ResultSetPartitionInfoFromJSON,
   ResultSetPartitionInfoFromJSONTyped,
   ResultSetPartitionInfoToJSON,
-} from './ResultSetPartitionInfo';
+} from './ResultSetPartitionInfo.ts';
 
 /**
  *

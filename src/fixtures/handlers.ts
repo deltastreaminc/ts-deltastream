@@ -1,6 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { StatementRequest, Version } from '../apiv2';
-import { log } from 'console';
+import { StatementRequest } from '../apiv2/models/StatementRequest.ts';
 
 //#region Response data
 

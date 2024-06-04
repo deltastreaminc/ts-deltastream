@@ -1,7 +1,7 @@
-import { ResultSet } from './apiv2';
-import { StatementHandler, Rows } from './conn';
-import { InterfaceError } from './error';
-import { castRowData, Column } from './rows';
+import { ResultSet } from './apiv2/index.ts';
+import { StatementHandler, Rows } from './conn.ts';
+import { InterfaceError } from './error.ts';
+import { castRowData, Column } from './rows.ts';
 
 export class ResultsetRows implements Rows {
   currentRowIdx: number;

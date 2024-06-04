@@ -1,5 +1,5 @@
 import { describe, it } from 'vitest';
-import { Connection } from './index';
+import { Connection } from './index.ts';
 
 describe('streaming', () => {
   it('should support streaming resultset', async () => {

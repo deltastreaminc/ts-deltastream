@@ -12,19 +12,19 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ResultSetDataInnerInner } from './ResultSetDataInnerInner';
+import { exists, mapValues } from '../runtime.ts';
+import type { ResultSetDataInnerInner } from './ResultSetDataInnerInner.ts';
 import {
   ResultSetDataInnerInnerFromJSON,
   ResultSetDataInnerInnerFromJSONTyped,
   ResultSetDataInnerInnerToJSON,
-} from './ResultSetDataInnerInner';
-import type { ResultSetMetadata } from './ResultSetMetadata';
+} from './ResultSetDataInnerInner.ts';
+import type { ResultSetMetadata } from './ResultSetMetadata.ts';
 import {
   ResultSetMetadataFromJSON,
   ResultSetMetadataFromJSONTyped,
   ResultSetMetadataToJSON,
-} from './ResultSetMetadata';
+} from './ResultSetMetadata.ts';
 
 /**
  *

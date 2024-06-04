@@ -9,7 +9,7 @@ import {
   ErrorResponseFromJSON,
   ResultSetContextFromJSON,
   ResponseError,
-} from './apiv2';
+} from './apiv2/index.ts';
 import {
   AuthenticationError,
   InterfaceError,
@@ -18,11 +18,11 @@ import {
   ServiceUnavailableError,
   SqlState,
   TimeoutError,
-} from './error';
-import { DPAPIConnection } from './dpconn';
-import { ResultsetRows } from './resultset-rows';
-import { StreamingRows } from './streaming-rows';
-import { Column } from './rows';
+} from './error.ts';
+import { DPAPIConnection } from './dpconn.ts';
+import { ResultsetRows } from './resultset-rows.ts';
+import { StreamingRows } from './streaming-rows.ts';
+import { Column } from './rows.ts';
 
 export interface StatementHandler {
   // submitStatement(query: string, attachments?: Blob[]): Promise<ResultSet>

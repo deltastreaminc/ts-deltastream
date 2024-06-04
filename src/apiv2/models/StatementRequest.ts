@@ -12,13 +12,13 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { StatementRequestParameters } from './StatementRequestParameters';
+import { exists, mapValues } from '../runtime.ts';
+import type { StatementRequestParameters } from './StatementRequestParameters.ts';
 import {
   StatementRequestParametersFromJSON,
   StatementRequestParametersFromJSONTyped,
   StatementRequestParametersToJSON,
-} from './StatementRequestParameters';
+} from './StatementRequestParameters.ts';
 
 /**
  *

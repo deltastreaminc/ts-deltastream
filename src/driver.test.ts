@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { Connection, createConnection } from './index';
-import { AuthenticationError } from './error';
-// const { setGlobalDispatcher, MockAgent } = require('undici');
+import { Connection, createConnection } from './index.ts';
+import { AuthenticationError } from './error.ts';
 
 describe('driver', () => {
   it('should throw auth error if no token provided', async () => {
