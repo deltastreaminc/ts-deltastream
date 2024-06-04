@@ -12,19 +12,19 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import type { ResultSetColumnsInner } from './ResultSetColumnsInner';
+import { exists, mapValues } from '../runtime.ts';
+import type { ResultSetColumnsInner } from './ResultSetColumnsInner.ts';
 import {
   ResultSetColumnsInnerFromJSON,
   ResultSetColumnsInnerFromJSONTyped,
   ResultSetColumnsInnerToJSON,
-} from './ResultSetColumnsInner';
-import type { ResultSetPartitionInfo } from './ResultSetPartitionInfo';
+} from './ResultSetColumnsInner.ts';
+import type { ResultSetPartitionInfo } from './ResultSetPartitionInfo.ts';
 import {
   ResultSetPartitionInfoFromJSON,
   ResultSetPartitionInfoFromJSONTyped,
   ResultSetPartitionInfoToJSON,
-} from './ResultSetPartitionInfo';
+} from './ResultSetPartitionInfo.ts';
 
 /**
  *

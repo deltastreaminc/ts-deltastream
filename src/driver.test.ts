@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { Connection, createConnection } from './index';
-import { AuthenticationError } from './error';
+import { Connection, createConnection } from './index.ts';
+import { AuthenticationError } from './error.ts';
 // const { setGlobalDispatcher, MockAgent } = require('undici');
 
 describe('driver', () => {

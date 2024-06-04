@@ -1,4 +1,4 @@
-import { StatementHandler, mapErrorResponse } from './conn';
+import { StatementHandler, mapErrorResponse } from './conn.ts';
 import {
   Configuration,
   DefaultConfig,
@@ -6,8 +6,8 @@ import {
   ResultSet,
   StatementStatusFromJSON,
   ResponseError,
-} from './dpapiv2';
-import { AuthenticationError, SQLError, SqlState } from './error';
+} from './dpapiv2/index.ts';
+import { AuthenticationError, SQLError, SqlState } from './error.ts';
 
 export class DPAPIConnection implements StatementHandler {
   token: string;

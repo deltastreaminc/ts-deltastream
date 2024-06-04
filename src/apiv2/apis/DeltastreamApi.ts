@@ -12,14 +12,14 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.ts';
 import type {
   ErrorResponse,
   ResultSet,
   StatementRequest,
   StatementStatus,
   Version,
-} from '../models/index';
+} from '../models/index.ts';
 import {
   ErrorResponseFromJSON,
   ErrorResponseToJSON,
@@ -31,7 +31,7 @@ import {
   StatementStatusToJSON,
   VersionFromJSON,
   VersionToJSON,
-} from '../models/index';
+} from '../models/index.ts';
 
 export interface GetStatementStatusRequest {
   statementID: string;

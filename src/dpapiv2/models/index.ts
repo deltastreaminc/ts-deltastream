@@ -1,10 +1,10 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './ErrorResponse';
-export * from './ResultSet';
-export * from './ResultSetColumnsInner';
-export * from './ResultSetDataInnerInner';
-export * from './ResultSetMetadata';
-export * from './ResultSetPartitionInfo';
-export * from './StatementStatus';
-export * from './Version';
+export * from './ErrorResponse.ts';
+export * from './ResultSet.ts';
+export * from './ResultSetColumnsInner.ts';
+export * from './ResultSetDataInnerInner.ts';
+export * from './ResultSetMetadata.ts';
+export * from './ResultSetPartitionInfo.ts';
+export * from './StatementStatus.ts';
+export * from './Version.ts';

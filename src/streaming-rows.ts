@@ -1,10 +1,10 @@
 import { deflateRaw } from 'zlib';
-import { DataplaneRequest } from './apiv2';
-import { Rows } from './conn';
-import { Deferred } from './deferred';
-import { DPAPIConnection } from './dpconn';
-import { InterfaceError, SQLError } from './error';
-import { castRowData, Column } from './rows';
+import { DataplaneRequest } from './apiv2/index.ts';
+import { Rows } from './conn.ts';
+import { Deferred } from './deferred.ts';
+import { DPAPIConnection } from './dpconn.ts';
+import { InterfaceError, SQLError } from './error.ts';
+import { castRowData, Column } from './rows.ts';
 import WebSocket from 'isomorphic-ws';
 
 interface PrintTopicMetadata {
