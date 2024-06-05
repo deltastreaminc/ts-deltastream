@@ -1,5 +1,11 @@
 # @deltastream/sdk
 
+## 0.5.0
+
+### Minor Changes
+
+- 9c6f42c: Handle BIGINT column types with floating exponents
+
 ## 0.4.0
 
 ### Minor Changes
