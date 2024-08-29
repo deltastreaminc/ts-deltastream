@@ -135,7 +135,7 @@ export class APIConnection implements StatementHandler, Connection {
     let rs = await this.submitStatement(query, attachments);
     if (rs.metadata.dataplaneRequest != undefined) {
       let dpconn = new DPAPIConnection(
-        this.serverUrl,
+        rs.metadata.dataplaneRequest.uri.replace(`/statements/${rs.metadata.dataplaneRequest.statementID}`, ''),
         rs.metadata.dataplaneRequest.token,
         this.timezone,
         this.sessionID
