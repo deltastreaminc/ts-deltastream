@@ -108,7 +108,25 @@ export class APIConnection implements StatementHandler, Connection {
   }
 
   async exec(query: string, attachments?: Blob[]): Promise<null> {
-    await this.submitStatement(query, attachments);
+    let rs = await this.submitStatement(query, attachments);
+    if (rs.metadata.context) {
+      let newCtx = rs.metadata.context;
+      if (newCtx.organizationID) {
+        this.rsctx.organizationID = newCtx.organizationID;
+      }
+      if (newCtx.roleName) {
+        this.rsctx.roleName = newCtx.roleName;
+      }
+      if (newCtx.databaseName) {
+        this.rsctx.databaseName = newCtx.databaseName;
+      }
+      if (newCtx.schemaName) {
+        this.rsctx.schemaName = newCtx.schemaName;
+      }
+      if (newCtx.storeName) {
+        this.rsctx.storeName = newCtx.storeName;
+      }
+    }
     return null;
   }
 
@@ -117,7 +135,7 @@ export class APIConnection implements StatementHandler, Connection {
     let rs = await this.submitStatement(query, attachments);
     if (rs.metadata.dataplaneRequest != undefined) {
       let dpconn = new DPAPIConnection(
-        this.serverUrl,
+        rs.metadata.dataplaneRequest.uri.replace(`/statements/${rs.metadata.dataplaneRequest.statementID}`, ''),
         rs.metadata.dataplaneRequest.token,
         this.timezone,
         this.sessionID
@@ -132,6 +150,24 @@ export class APIConnection implements StatementHandler, Connection {
       let rows = new StreamingRows(dpconn, rs.metadata.dataplaneRequest);
       await rows.open();
       return rows;
+    }
+    if (rs.metadata.context) {
+      let newCtx = rs.metadata.context;
+      if (newCtx.organizationID) {
+        this.rsctx.organizationID = newCtx.organizationID;
+      }
+      if (newCtx.roleName) {
+        this.rsctx.roleName = newCtx.roleName;
+      }
+      if (newCtx.databaseName) {
+        this.rsctx.databaseName = newCtx.databaseName;
+      }
+      if (newCtx.schemaName) {
+        this.rsctx.schemaName = newCtx.schemaName;
+      }
+      if (newCtx.storeName) {
+        this.rsctx.storeName = newCtx.storeName;
+      }
     }
     return new ResultsetRows(this, rs);
   }
