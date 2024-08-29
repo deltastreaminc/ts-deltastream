@@ -108,7 +108,25 @@ export class APIConnection implements StatementHandler, Connection {
   }
 
   async exec(query: string, attachments?: Blob[]): Promise<null> {
-    await this.submitStatement(query, attachments);
+    let rs = await this.submitStatement(query, attachments);
+    if (rs.metadata.context != undefined) {
+      let newCtx = rs.metadata.context;
+      if (newCtx.organizationID != undefined) {
+        this.rsctx.organizationID = newCtx.organizationID;
+      }
+      if (newCtx.roleName != undefined) {
+        this.rsctx.roleName = newCtx.roleName;
+      }
+      if (newCtx.databaseName != undefined) {
+        this.rsctx.databaseName = newCtx.databaseName;
+      }
+      if (newCtx.schemaName != undefined) {
+        this.rsctx.schemaName = newCtx.schemaName;
+      }
+      if (newCtx.storeName != undefined) {
+        this.rsctx.storeName = newCtx.storeName;
+      }
+    }
     return null;
   }
 
@@ -132,6 +150,24 @@ export class APIConnection implements StatementHandler, Connection {
       let rows = new StreamingRows(dpconn, rs.metadata.dataplaneRequest);
       await rows.open();
       return rows;
+    }
+    if (rs.metadata.context != undefined) {
+      let newCtx = rs.metadata.context;
+      if (newCtx.organizationID != undefined) {
+        this.rsctx.organizationID = newCtx.organizationID;
+      }
+      if (newCtx.roleName != undefined) {
+        this.rsctx.roleName = newCtx.roleName;
+      }
+      if (newCtx.databaseName != undefined) {
+        this.rsctx.databaseName = newCtx.databaseName;
+      }
+      if (newCtx.schemaName != undefined) {
+        this.rsctx.schemaName = newCtx.schemaName;
+      }
+      if (newCtx.storeName != undefined) {
+        this.rsctx.storeName = newCtx.storeName;
+      }
     }
     return new ResultsetRows(this, rs);
   }
