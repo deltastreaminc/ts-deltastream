@@ -109,21 +109,21 @@ export class APIConnection implements StatementHandler, Connection {
 
   async exec(query: string, attachments?: Blob[]): Promise<null> {
     let rs = await this.submitStatement(query, attachments);
-    if (rs.metadata.context != undefined) {
+    if (rs.metadata.context) {
       let newCtx = rs.metadata.context;
-      if (newCtx.organizationID != undefined) {
+      if (newCtx.organizationID) {
         this.rsctx.organizationID = newCtx.organizationID;
       }
-      if (newCtx.roleName != undefined) {
+      if (newCtx.roleName) {
         this.rsctx.roleName = newCtx.roleName;
       }
-      if (newCtx.databaseName != undefined) {
+      if (newCtx.databaseName) {
         this.rsctx.databaseName = newCtx.databaseName;
       }
-      if (newCtx.schemaName != undefined) {
+      if (newCtx.schemaName) {
         this.rsctx.schemaName = newCtx.schemaName;
       }
-      if (newCtx.storeName != undefined) {
+      if (newCtx.storeName) {
         this.rsctx.storeName = newCtx.storeName;
       }
     }
@@ -151,21 +151,21 @@ export class APIConnection implements StatementHandler, Connection {
       await rows.open();
       return rows;
     }
-    if (rs.metadata.context != undefined) {
+    if (rs.metadata.context) {
       let newCtx = rs.metadata.context;
-      if (newCtx.organizationID != undefined) {
+      if (newCtx.organizationID) {
         this.rsctx.organizationID = newCtx.organizationID;
       }
-      if (newCtx.roleName != undefined) {
+      if (newCtx.roleName) {
         this.rsctx.roleName = newCtx.roleName;
       }
-      if (newCtx.databaseName != undefined) {
+      if (newCtx.databaseName) {
         this.rsctx.databaseName = newCtx.databaseName;
       }
-      if (newCtx.schemaName != undefined) {
+      if (newCtx.schemaName) {
         this.rsctx.schemaName = newCtx.schemaName;
       }
-      if (newCtx.storeName != undefined) {
+      if (newCtx.storeName) {
         this.rsctx.storeName = newCtx.storeName;
       }
     }
