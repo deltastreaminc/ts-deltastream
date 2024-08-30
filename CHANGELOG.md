@@ -1,5 +1,11 @@
 # @deltastream/sdk
 
+## 0.5.1
+
+### Patch Changes
+
+- 15245a1: fix dataplane api requests
+
 ## 0.5.0
 
 ### Minor Changes
