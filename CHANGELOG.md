@@ -1,5 +1,11 @@
 # @deltastream/sdk
 
+## 0.5.2
+
+### Patch Changes
+
+- 3fb5159: Fix package json module setup
+
 ## 0.5.1
 
 ### Patch Changes
