@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  version: '2.0.0'
+  version: '2.0.1'
   title: DeltaStream REST API
 servers:
   - url: https://api.deltastream.io/v2
@@ -25,7 +25,10 @@ components:
           description: 'Database schema to add to search path for name resolution. This value is case sensitive'
           type: string
         store:
-          description: 'Store to add to search path for name resolution. This value is case sensitive'
+          description: 'Store to use when executing a statement. This value is case sensitive'
+          type: string
+        computePool:
+          description: 'Compute_pool to use when executing a statement. This value is case sensitive'
           type: string
         # bindings:
         #   type: object
@@ -106,7 +109,7 @@ components:
               x-go-type: '*string'
           description: |-
             Each item within a column of data is expressed as a string, regardless of the DeltaStream type of the column.
-            For example, the number 1.0 will be returned as "1.0".
+            For example, the number 1.0 will be returned as '1.0'.
       required:
         - sqlState
         - statementID
@@ -140,6 +143,8 @@ components:
           $ref: '#/components/schemas/ResultSetContext'
       required:
         - encoding
+        - partitionInfo
+        - columns
     ResultSetColumns:
       type: array
       minItems: 0
@@ -152,6 +157,8 @@ components:
             type: string
           nullable:
             type: boolean
+          display_hint:
+            type: string
         required:
           - name
           - type
@@ -164,6 +171,8 @@ components:
         uri:
           type: string
         statementID:
+          type: string
+        queryID:
           type: string
         requestType:
           type: string
@@ -189,10 +198,14 @@ components:
           type: string
         storeName:
           type: string
+        computePoolName:
+          type: string
     ErrorResponse:
       type: object
       properties:
         message:
+          type: string
+        traceID:
           type: string
       required:
         - message
@@ -295,6 +308,26 @@ components:
       name: 'timezone'
       in: query
       allowEmptyValue: false
+    resourceType:
+      name: resourceType
+      in: path
+      schema:
+        type: string
+        enum: [function_source, descriptor_source]
+      required: true
+    resourceName:
+      name: resourceName
+      in: path
+      schema:
+        type: string
+      required: true
+    organizationID:
+      name: organizationID
+      in: path
+      schema:
+        type: string
+        format: uuid
+      required: true
   securitySchemes:
     apiToken:
       type: http
@@ -306,8 +339,6 @@ paths:
     post:
       operationId: SubmitStatement
       description: Submit one statement for execution.
-      tags:
-        - deltastream
       parameters: []
       requestBody:
         required: true
@@ -364,8 +395,6 @@ paths:
     get:
       operationId: GetStatementStatus
       description: Lookup the status of a statement.
-      tags:
-        - deltastream
       parameters:
         - $ref: '#/components/parameters/statementID'
         - $ref: '#/components/parameters/sessionID'
@@ -400,8 +429,6 @@ paths:
     get:
       description: Returns the server version
       operationId: GetVersion
-      tags:
-        - deltastream
       responses:
         '200':
           description: server version
@@ -415,5 +442,34 @@ paths:
           $ref: '#/components/responses/ErrInternal'
         '503':
           $ref: '#/components/responses/ErrServiceUnavailable'
+  /download/{resourceType}/{organizationID}/{resourceName}:
+    get:
+      operationId: DownloadResource
+      description: Download a resource
+      parameters:
+      - $ref: '#/components/parameters/resourceType'
+      - $ref: '#/components/parameters/organizationID'
+      - $ref: '#/components/parameters/resourceName'
+      responses:
+        '200':
+          description: Download file
+          content:
+            'application/octet-stream':
+              schema:
+                type: string
+                format: bytes
+        '400':
+          $ref: '#/components/responses/ErrBadRequest'
+        '403':
+          $ref: '#/components/responses/ErrForbidden'
+        '404':
+          $ref: '#/components/responses/ErrNotFound'
+        '408':
+          $ref: '#/components/responses/ErrDeadlineExceeded'
+        '500':
+          $ref: '#/components/responses/ErrInternal'
+        '503':
+          $ref: '#/components/responses/ErrServiceUnavailable'
+
 security:
   - apiToken: []
