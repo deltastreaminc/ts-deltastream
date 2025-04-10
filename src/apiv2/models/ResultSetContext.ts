@@ -49,6 +49,12 @@ export interface ResultSetContext {
    * @memberof ResultSetContext
    */
   storeName?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ResultSetContext
+   */
+  computePoolName?: string;
 }
 
 /**
@@ -81,6 +87,7 @@ export function ResultSetContextFromJSONTyped(
       : json['databaseName'],
     schemaName: !exists(json, 'schemaName') ? undefined : json['schemaName'],
     storeName: !exists(json, 'storeName') ? undefined : json['storeName'],
+    computePoolName: !exists(json, 'computePoolName') ? undefined : json['computePoolName'],
   };
 }
 
@@ -97,5 +104,6 @@ export function ResultSetContextToJSON(value?: ResultSetContext | null): any {
     databaseName: value.databaseName,
     schemaName: value.schemaName,
     storeName: value.storeName,
+    computePoolName: value.computePoolName,
   };
 }

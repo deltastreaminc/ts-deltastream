@@ -62,6 +62,12 @@ export interface StatementRequest {
    * @memberof StatementRequest
    */
   store?: string;
+   /**
+   * Compute Pool to add to search path for name resolution. This value is case sensitive
+   * @type {string}
+   * @memberof StatementRequest
+   */
+   computePoolName?: string;
   /**
    *
    * @type {StatementRequestParameters}

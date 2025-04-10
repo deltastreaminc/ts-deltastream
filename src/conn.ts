@@ -105,6 +105,9 @@ export class APIConnection implements StatementHandler, Connection {
     if (url.searchParams.has('storeName')) {
       this.rsctx.storeName = url.searchParams.get('storeName')!;
     }
+    if (url.searchParams.has('computePoolName')) {
+      this.rsctx.storeName = url.searchParams.get('computePoolName')!;
+    }
   }
 
   async exec(query: string, attachments?: Blob[]): Promise<null> {
@@ -125,6 +128,9 @@ export class APIConnection implements StatementHandler, Connection {
       }
       if (newCtx.storeName) {
         this.rsctx.storeName = newCtx.storeName;
+      }
+      if (newCtx.computePoolName) {
+        this.rsctx.storeName = newCtx.computePoolName;
       }
     }
     return null;
@@ -168,6 +174,9 @@ export class APIConnection implements StatementHandler, Connection {
       if (newCtx.storeName) {
         this.rsctx.storeName = newCtx.storeName;
       }
+      if (newCtx.computePoolName) {
+        this.rsctx.storeName = newCtx.computePoolName;
+      }
     }
     return new ResultsetRows(this, rs);
   }
@@ -185,6 +194,7 @@ export class APIConnection implements StatementHandler, Connection {
           database: this.rsctx.databaseName,
           schema: this.rsctx.schemaName,
           store: this.rsctx.storeName,
+          computePoolName: this.rsctx.computePoolName,
           parameters: {
             sessionID: this.sessionID,
             timezone: this.timezone,
