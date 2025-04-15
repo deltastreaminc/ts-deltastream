@@ -106,7 +106,7 @@ export class APIConnection implements StatementHandler, Connection {
       this.rsctx.storeName = url.searchParams.get('storeName')!;
     }
     if (url.searchParams.has('computePoolName')) {
-      this.rsctx.storeName = url.searchParams.get('computePoolName')!;
+      this.rsctx.computePoolName = url.searchParams.get('computePoolName')!;
     }
   }
 
@@ -130,7 +130,7 @@ export class APIConnection implements StatementHandler, Connection {
         this.rsctx.storeName = newCtx.storeName;
       }
       if (newCtx.computePoolName) {
-        this.rsctx.storeName = newCtx.computePoolName;
+        this.rsctx.computePoolName = newCtx.computePoolName;
       }
     }
     return null;
