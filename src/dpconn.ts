@@ -66,7 +66,7 @@ export class DPAPIConnection implements StatementHandler {
           );
         }
         case 202: {
-          let statementStatus = StatementStatusFromJSON(resp.raw.body);
+          let statementStatus = StatementStatusFromJSON(await resp.value());
           await new Promise((resolve) => setTimeout(resolve, 1000));
           return await this.getStatementStatus(
             statementStatus.statementID,
