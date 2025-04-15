@@ -1,3 +1,3 @@
 /* tslint:disable */
 /* eslint-disable */
-export * from './DeltastreamApi.ts';
+export * from './DeltastreamApi';
