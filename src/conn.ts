@@ -175,7 +175,7 @@ export class APIConnection implements StatementHandler, Connection {
         this.rsctx.storeName = newCtx.storeName;
       }
       if (newCtx.computePoolName) {
-        this.rsctx.storeName = newCtx.computePoolName;
+        this.rsctx.computePoolName = newCtx.computePoolName;
       }
     }
     return new ResultsetRows(this, rs);
@@ -194,7 +194,7 @@ export class APIConnection implements StatementHandler, Connection {
           database: this.rsctx.databaseName,
           schema: this.rsctx.schemaName,
           store: this.rsctx.storeName,
-          computePoolName: this.rsctx.computePoolName,
+          computePool: this.rsctx.computePoolName,
           parameters: {
             sessionID: this.sessionID,
             timezone: this.timezone,
