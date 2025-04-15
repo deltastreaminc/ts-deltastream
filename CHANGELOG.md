@@ -1,5 +1,11 @@
 # @deltastream/sdk
 
+## 0.5.4
+
+### Patch Changes
+
+- 92f96d6: Fixes a bug that caused long running queries to fail
+
 ## 0.5.2
 
 ### Patch Changes
