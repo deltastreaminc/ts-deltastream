@@ -1,5 +1,11 @@
 # @deltastream/sdk
 
+## 0.5.5
+
+### Patch Changes
+
+- 51b8cf1: Security fix for tar-fs package
+
 ## 0.5.4
 
 ### Patch Changes
