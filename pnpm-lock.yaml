@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      geckodriver:
+        specifier: ^5.0.0
+        version: 5.0.0
       isomorphic-ws:
         specifier: ^5.0.0
         version: 5.0.0(ws@8.18.1)
