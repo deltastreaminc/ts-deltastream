@@ -1,5 +1,11 @@
 # @deltastream/sdk
 
+## 0.5.6
+
+### Patch Changes
+
+- 1499e62: update tar-fs to 3.0.8
+
 ## 0.5.5
 
 ### Patch Changes
