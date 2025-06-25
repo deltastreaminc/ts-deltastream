@@ -18,7 +18,7 @@ importers:
         specifier: ^12.4.3
         version: 12.4.3
       tar-fs:
-        specifier: ^3.0.8
+        specifier: ^3.0.10
         version: 3.0.10
       undici:
         specifier: ^6.21.2
