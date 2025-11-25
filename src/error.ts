@@ -90,6 +90,7 @@ enum SqlState {
   SqlState3D024 = '3D024',
   SqlState3D025 = '3D025',
   SqlState3D026 = '3D026',
+  SqlState3D027 = '3D027',
   SqlState3E001 = '3E001',
   SqlState3E002 = '3E002',
   SqlState3E003 = '3E003',
@@ -114,6 +115,7 @@ enum SqlState {
   SqlState42P17 = '42P017',
   SqlState42P18 = '42P018',
   SqlState42P19 = '42P019',
+  SqlState42P20 = '42P020',
   SqlState42P001 = '42P001',
   SqlState42P002 = '42P002',
   SqlState57014 = '57014',
@@ -185,6 +187,7 @@ enum SqlState {
   SqlStateInvalidUserdata = SqlState3D024,
   SqlStateInvalidDataplane = SqlState3D025,
   SqlStateInvalidPlaybook = SqlState3D026,
+  SqlStateInvalidPgUser = SqlState3D027,
 
   // Class 3E — Resource not ready
 
@@ -215,6 +218,7 @@ enum SqlState {
   SqlStateDuplicateRelation = SqlState42P17,
   SqlStateDuplicateSchemaRegistry = SqlState42P18,
   SqlStateDuplicateComputePool = SqlState42P19,
+  SqlStateDuplicatePgUser = SqlState42P20,
   SqlStateAmbiguousOrganization = SqlState42P001,
   SqlStateAmbiguousStore = SqlState42P002,
 
