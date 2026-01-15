@@ -25,7 +25,7 @@ importers:
         version: 3.1.1
       undici:
         specifier: ^6.21.2
-        version: 6.21.2
+        version: 6.23.0
       ws:
         specifier: ^8.18.1
         version: 8.18.1
@@ -2076,8 +2076,8 @@ packages:
   undici-types@6.19.8:
     resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
 
-  undici@6.21.2:
-    resolution: {integrity: sha512-uROZWze0R0itiAKVPsYhFov9LxrPMHLMEQFszeI2gCN6bnIIZ8twzBCJcN2LJrBBLfrP0t1FW0g+JmKVl8Vk1g==}
+  undici@6.23.0:
+    resolution: {integrity: sha512-VfQPToRA5FZs/qJxLIinmU59u0r7LXqoJkCzinq3ckNJp3vKEh7jTWN589YQ5+aoAC/TGRLyJLCPKcLQbM8r9g==}
     engines: {node: '>=18.17'}
 
   universalify@0.1.2:
@@ -2208,6 +2208,7 @@ packages:
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@4.0.0:
     resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
@@ -3195,7 +3196,7 @@ snapshots:
       parse5: 7.3.0
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
-      undici: 6.21.2
+      undici: 6.23.0
       whatwg-mimetype: 4.0.0
 
   chokidar@4.0.3:
@@ -4380,7 +4381,7 @@ snapshots:
 
   undici-types@6.19.8: {}
 
-  undici@6.21.2: {}
+  undici@6.23.0: {}
 
   universalify@0.1.2: {}
 
@@ -4496,7 +4497,7 @@ snapshots:
       '@wdio/types': 9.12.6
       '@wdio/utils': 9.12.6
       deepmerge-ts: 7.1.5
-      undici: 6.21.2
+      undici: 6.23.0
       ws: 8.18.1
     transitivePeerDependencies:
       - bare-abort-controller
