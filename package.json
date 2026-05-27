@@ -65,6 +65,9 @@
   "overrides": {
     "geckodriver": {
       "tar-fs": "3.0.10"
+    },
+    "get-uri": {
+      "basic-ftp": "5.3.1"
     }
   }
 }
