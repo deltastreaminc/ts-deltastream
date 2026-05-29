@@ -63,6 +63,7 @@
     ]
   },
   "overrides": {
+    "rollup" : "^4.59.0",
     "undici" : "^7.16.0",
     "webdriver": { "undici": "^7.16.0" },
     "cheerio": { "undici": "^7.16.0" },
