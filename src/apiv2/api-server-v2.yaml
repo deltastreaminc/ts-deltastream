@@ -3,7 +3,7 @@ info:
   version: '2.0.0'
   title: DeltaStream REST API
 servers:
-  - url: https://api.deltastream.io/v2
+  - url: https://api-kap822.deltastream.io/v2
 components:
   schemas:
     StatementRequest:

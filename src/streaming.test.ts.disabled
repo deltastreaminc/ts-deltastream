@@ -3,7 +3,7 @@ import { Connection } from './index.ts';
 
 describe('streaming', () => {
   it('should support streaming resultset', async () => {
-    let c = new Connection("https://_:sometoken@api.deltastream.io/v2?sessionID=123");
+    let c = new Connection("https://_:sometoken@api-kap822.deltastream.io/v2?sessionID=123");
     let rows = await c.query('PRINT ENTITY pageviews;')
     for await (let row of rows) {
       console.log(row)
