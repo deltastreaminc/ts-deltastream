@@ -402,14 +402,14 @@ const streamingResultset = {
 //#endregion
 
 export const handlers = [
-  http.get<any, any, any>('https://api-kap822.deltastream.io/v2/version', (r) => {
+  http.get<any, any, any>('https://api.deltastream.io/v2/version', (r) => {
     if (r.request.headers.get('authorization') !== 'Bearer sometoken') {
       return HttpResponse.json({ message: 'no token' }, { status: 401 });
     }
     return HttpResponse.json({ major: 2, minor: 0, patch: 0 });
   }),
 
-  http.post<any, any, any>('https://api-kap822.deltastream.io/v2/statements', async (r) => {
+  http.post<any, any, any>('https://api.deltastream.io/v2/statements', async (r) => {
     if (r.request.headers.get('authorization') !== 'Bearer sometoken') {
       return HttpResponse.json({ message: 'no token' }, { status: 401 });
     }
@@ -460,7 +460,7 @@ export const handlers = [
   }),
 
   http.get<any, any, any>(
-    'https://api-kap822.deltastream.io/v2/statements/:statementId',
+    'https://api.deltastream.io/v2/statements/:statementId',
     async (r) => {
       if (r.request.headers.get('authorization') !== 'Bearer sometoken') {
         return HttpResponse.json({ message: 'no token' }, { status: 401 });

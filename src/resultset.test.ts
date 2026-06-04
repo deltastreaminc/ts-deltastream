@@ -5,7 +5,7 @@ import { blobData } from './fixtures/handlers.ts';
 describe('resultset', () => {
   it('should support single resultset', async () => {
     let c = createConnection(
-      'https://_:sometoken@api-kap822.deltastream.io/v2?sessionID=123'
+      'https://_:sometoken@api.deltastream.io/v2?sessionID=123'
     );
     let rows = await c.query('SINGLE PARTITION WITH ONE ROW;');
     let numRows = 0;
@@ -25,7 +25,7 @@ describe('resultset', () => {
 
   it('should support single resultset', async () => {
     let c = createConnection(
-      'https://_:sometoken@api-kap822.deltastream.io/v2?sessionID=123'
+      'https://_:sometoken@api.deltastream.io/v2?sessionID=123'
     );
     let rows = await c.query('NO PARTITION WITH NO ROWS;');
     let numRows = 0;
@@ -38,7 +38,7 @@ describe('resultset', () => {
 
   it('should support resultset with multiple partitions', async () => {
     let c = createConnection(
-      'https://_:sometoken@api-kap822.deltastream.io/v2?sessionID=123'
+      'https://_:sometoken@api.deltastream.io/v2?sessionID=123'
     );
     let rows = await c.query('MULTI PARTITION WITH 4 ROWS;');
     let numRows = 0;
@@ -51,7 +51,7 @@ describe('resultset', () => {
 
   it('should support delayed single resultset', async () => {
     let c = createConnection(
-      'https://_:sometoken@api-kap822.deltastream.io/v2?sessionID=123'
+      'https://_:sometoken@api.deltastream.io/v2?sessionID=123'
     );
     let rows = await c.query('DELAYED SINGLE PARTITION WITH ONE ROW;');
     let numRows = 0;
@@ -71,14 +71,14 @@ describe('resultset', () => {
 
   it('should support simple exec query', async () => {
     let c = createConnection(
-      'https://_:sometoken@api-kap822.deltastream.io/v2?sessionID=123'
+      'https://_:sometoken@api.deltastream.io/v2?sessionID=123'
     );
     await c.exec('SINGLE PARTITION WITH ONE ROW;');
   });
 
   it('should support query with attachments', async () => {
     let c = createConnection(
-      'https://_:sometoken@api-kap822.deltastream.io/v2?sessionID=123'
+      'https://_:sometoken@api.deltastream.io/v2?sessionID=123'
     );
     await c.exec('TEST ATTACHMENT;', [
       new Blob([blobData], { type: 'text/plain' }),
@@ -87,7 +87,7 @@ describe('resultset', () => {
 
   it('should support query with all data types', async () => {
     let c = createConnection(
-      'https://_:sometoken@api-kap822.deltastream.io/v2?sessionID=123'
+      'https://_:sometoken@api.deltastream.io/v2?sessionID=123'
     );
     let rows = await c.query('ALL DATA TYPES;');
     let numRows = 0;

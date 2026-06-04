@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "https://api-kap822.deltastream.io/v2".replace(/\/+$/, "");
+export const BASE_PATH = "https://api.deltastream.io/v2".replace(/\/+$/, "");
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path
