@@ -30,32 +30,32 @@
     "url": "https://github.com/deltastreaminc/ts-deltastream"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.29.2",
-    "@types/node": "^20.17.32",
+    "@changesets/cli": "^2.31.0",
+    "@types/node": "^20.19.41",
     "@types/ws": "^8.18.1",
-    "@vitest/browser": "^3.1.2",
-    "@vitest/coverage-istanbul": "^3.1.2",
-    "@vitest/coverage-v8": "^3.1.2",
-    "msw": "^2.7.5",
-    "prettier": "^3.5.3",
+    "@vitest/browser": "^4.1.8",
+    "@vitest/coverage-istanbul": "^4.1.8",
+    "@vitest/coverage-v8": "^4.1.8",
+    "brace-expansion": "^2.0.2",
+    "msw": "^2.14.6",
+    "prettier": "^3.8.3",
     "tar-fs": "^3.0.10",
-    "tsup": "^8.4.0",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.2",
-    "webdriverio": "^9.12.7",
-    "brace-expansion": "^2.0.2"
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.8",
+    "webdriverio": "^9.27.2"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
+    "brace-expansion": "^2.1.1",
     "geckodriver": "^5.0.0",
     "isomorphic-ws": "^5.0.0",
     "mathjs": "^12.4.3",
-    "tar-fs": "^3.0.10",
-    "undici": "^7.16.0",
-    "ws": "^8.18.1",
-    "brace-expansion": "^2.0.2"
+    "tar-fs": "^3.1.2",
+    "undici": "^7.27.0",
+    "ws": "^8.21.0"
   },
   "msw": {
     "workerDirectory": [
@@ -63,13 +63,17 @@
     ]
   },
   "overrides": {
-    "rollup" : "^4.59.0",
-    "undici" : "^7.16.0",
-    "webdriver": { "undici": "^7.16.0" },
-    "cheerio": { "undici": "^7.16.0" },
-    "minimatch" : "^9.0.7",
+    "rollup": "^4.59.0",
+    "undici": "^7.16.0",
+    "webdriver": {
+      "undici": "^7.16.0"
+    },
+    "cheerio": {
+      "undici": "^7.16.0"
+    },
+    "minimatch": "^9.0.7",
     "fast-xml-parser": "^5.7.0",
-    "lodash" : "^4.18.1",
+    "lodash": "^4.18.1",
     "geckodriver": {
       "tar-fs": "3.0.10"
     }

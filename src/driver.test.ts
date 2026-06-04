@@ -6,14 +6,14 @@ describe('driver', () => {
   it('should throw auth error if no token provided', async () => {
     expect(() =>
       createConnection('https://api.deltastream.io/v2?sessionID=123')
-    ).toThrowError(AuthenticationError);
+    ).toThrow(AuthenticationError);
   });
 
   it('should throw auth error if invalid token provided', async () => {
     let c = createConnection(
       'https://_:xx@api.deltastream.io/v2?sessionID=123'
     );
-    await expect(() => c.version()).rejects.toThrowError(AuthenticationError);
+    await expect(c.version()).rejects.toThrow(AuthenticationError);
   });
 
   it('should succeed if valid token provided', async () => {
