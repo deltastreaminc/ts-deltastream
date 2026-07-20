@@ -43,7 +43,8 @@
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
     "vitest": "^4.1.8",
-    "webdriverio": "^9.27.2"
+    "webdriverio": "^9.27.2",
+    "undici" : "^7.28.0"
   },
   "publishConfig": {
     "access": "public"
@@ -54,7 +55,7 @@
     "isomorphic-ws": "^5.0.0",
     "mathjs": "^12.4.3",
     "tar-fs": "^3.1.2",
-    "undici": "^7.27.0",
+    "undici": "^7.28.0",
     "ws": "^8.21.0"
   },
   "msw": {
@@ -64,18 +65,24 @@
   },
   "overrides": {
     "rollup": "^4.59.0",
-    "undici": "^7.16.0",
+    "undici": "$undici",
     "webdriver": {
-      "undici": "^7.16.0"
+      "undici": "^7.28.0"
     },
     "cheerio": {
-      "undici": "^7.16.0"
+      "undici": "^7.28.0"
     },
     "minimatch": "^9.0.7",
     "fast-xml-parser": "^5.7.0",
     "lodash": "^4.18.1",
     "geckodriver": {
       "tar-fs": "3.0.10"
+    }
+  },
+  "pnpm": {
+    "overrides": {
+        "webdriver@9.29.1>undici": "^7.28.0",
+        "webdriverio@9.29.1>webdriver@9.29.1>undici": "^7.28.0"
     }
   }
 }
