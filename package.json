@@ -30,7 +30,7 @@
     "url": "https://github.com/deltastreaminc/ts-deltastream"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^3.0.1",
     "@types/node": "^20.19.41",
     "@types/ws": "^8.18.1",
     "@vitest/browser": "^4.1.8",
