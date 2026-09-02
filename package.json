@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@deltastream/sdk",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Official DeltaStream sdk for Node.js",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -44,7 +44,7 @@
     "typescript": "^5.9.3",
     "vitest": "^4.1.8",
     "webdriverio": "^9.27.2",
-    "undici" : "^7.28.0"
+    "undici": "^7.28.0"
   },
   "publishConfig": {
     "access": "public"
@@ -81,8 +81,8 @@
   },
   "pnpm": {
     "overrides": {
-        "webdriver@9.29.1>undici": "^7.28.0",
-        "webdriverio@9.29.1>webdriver@9.29.1>undici": "^7.28.0"
+      "webdriver@9.29.1>undici": "^7.28.0",
+      "webdriverio@9.29.1>webdriver@9.29.1>undici": "^7.28.0"
     }
   }
 }
