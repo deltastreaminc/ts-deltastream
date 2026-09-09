@@ -30,7 +30,7 @@
     "url": "https://github.com/deltastreaminc/ts-deltastream"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^3.0.1",
     "@types/node": "^20.19.41",
     "@types/ws": "^8.18.1",
     "@vitest/browser": "^4.1.8",
@@ -42,9 +42,9 @@
     "tar-fs": "^3.0.10",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
+    "undici": "^7.28.0",
     "vitest": "^4.1.8",
-    "webdriverio": "^9.27.2",
-    "undici" : "^7.28.0"
+    "webdriverio": "^8.14.6"
   },
   "publishConfig": {
     "access": "public"
@@ -81,8 +81,8 @@
   },
   "pnpm": {
     "overrides": {
-        "webdriver@9.29.1>undici": "^7.28.0",
-        "webdriverio@9.29.1>webdriver@9.29.1>undici": "^7.28.0"
+      "webdriver@9.29.1>undici": "^7.28.0",
+      "webdriverio@9.29.1>webdriver@9.29.1>undici": "^7.28.0"
     }
   }
 }
