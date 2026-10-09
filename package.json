@@ -7,6 +7,11 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "private": false,
+  "packageManager": "pnpm@10.34.6",
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10 <11"
+  },
   "scripts": {
     "build": "tsup",
     "lint": "tsc",
@@ -30,32 +35,32 @@
     "url": "https://github.com/deltastreaminc/ts-deltastream"
   },
   "devDependencies": {
-    "@changesets/cli": "^3.0.1",
-    "@types/node": "^20.19.41",
+    "@changesets/cli": "^3.0.3",
+    "@types/node": "^24.19.2",
     "@types/ws": "^8.18.1",
-    "@vitest/browser": "^4.1.11",
-    "@vitest/coverage-istanbul": "^4.1.11",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/browser": "^5.0.3",
+    "@vitest/coverage-istanbul": "^5.0.3",
+    "@vitest/coverage-v8": "^5.0.3",
     "brace-expansion": "^2.1.7",
     "msw": "^2.14.6",
     "prettier": "^3.8.3",
     "tar-fs": "^3.1.3",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
-    "undici": "^7.28.0",
-    "vitest": "^4.1.11",
-    "webdriverio": "^9.32.0"
+    "undici": "^8.11.2",
+    "vitest": "^5.0.3",
+    "webdriverio": "^10.0.2"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "brace-expansion": "^2.1.7",
-    "geckodriver": "^5.0.0",
+    "geckodriver": "^8.0.0",
     "isomorphic-ws": "^5.0.0",
     "mathjs": "^15.2.0",
     "tar-fs": "^3.1.3",
-    "undici": "^7.28.0",
+    "undici": "^8.11.2",
     "ws": "^8.21.0"
   },
   "msw": {
@@ -68,10 +73,10 @@
     "esbuild": "0.28.1",
     "undici": "$undici",
     "webdriver": {
-      "undici": "^7.28.0"
+      "undici": "^8.11.2"
     },
     "cheerio": {
-      "undici": "^7.28.0"
+      "undici": "^8.11.2"
     },
     "minimatch": "^9.0.9",
     "fast-xml-parser": "^5.7.0",
@@ -86,10 +91,13 @@
     "shell-quote": "^1.12.0"
   },
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "edgedriver",
+      "geckodriver",
+      "msw"
+    ],
     "overrides": {
-      "webdriver@9.29.1>undici": "^7.28.0",
-      "webdriver@9.32.0>undici": "^7.28.0",
-      "webdriverio@9.29.1>webdriver@9.29.1>undici": "^7.28.0",
+      "webdriver@10.0.2>undici": "^8.11.2",
       "esbuild": "0.28.1",
       "vite>esbuild": "0.28.1",
       "tsup>esbuild": "0.28.1",
