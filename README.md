@@ -15,10 +15,9 @@ at <a href="https://docs.deltastream.io/getting-started/starting-with-cli">Getti
 
 ## Pre-requisites
 
-  * [`pnpm`](https://pnpm.io/) 9
-  * Node.js 20
+  * [`pnpm`](https://pnpm.io/) 10
+  * Node.js 24 LTS
 
 ## Package Dependencies
 
 Packages are managed by `pnpm` and must be installed using this package manager to ensure compatibility with the release pipeline.
-
