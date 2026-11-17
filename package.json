@@ -87,7 +87,8 @@
       "esbuild": "0.28.1",
       "vite>esbuild": "0.28.1",
       "tsup>esbuild": "0.28.1",
-      "bundle-require>esbuild": "0.28.1"
+      "bundle-require>esbuild": "0.28.1",
+      "shell-quote": "^1.11.0"
     }
   }
 }
