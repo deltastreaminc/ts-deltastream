@@ -6,6 +6,7 @@ import { castRowData, Column } from './rows.ts';
 export class ResultsetRows implements Rows {
   currentRowIdx: number;
   currentPartitionIdx: number;
+  private currentPartitionStart = 0;
   currentResultSet: ResultSet;
   stmtHandler: StatementHandler;
   isOpen: boolean;
@@ -32,7 +33,9 @@ export class ResultsetRows implements Rows {
           return { value: null, done: true };
         }
 
-        let [rowIdx, partIdx] = this.calcPartitionIdx(this.currentRowIdx + 1);
+        const [rowIdx, partIdx, partitionStart] = this.calcPartitionIdx(
+          this.currentRowIdx + 1
+        );
         if (partIdx == -1) {
           return { value: null, done: true };
         }
@@ -43,6 +46,7 @@ export class ResultsetRows implements Rows {
             partIdx
           );
           this.currentPartitionIdx = partIdx;
+          this.currentPartitionStart = partitionStart;
         }
         this.currentRowIdx++;
         const row = castRowData(
@@ -75,22 +79,24 @@ export class ResultsetRows implements Rows {
     return columns;
   }
 
-  private calcPartitionIdx(rowIdx: number): [row: number, part: number] {
-    if (this.currentResultSet.metadata.partitionInfo == undefined) {
+  private calcPartitionIdx(
+    rowIdx: number
+  ): [row: number, part: number, start: number] {
+    const partitions = this.currentResultSet.metadata.partitionInfo;
+    if (partitions == undefined) {
       throw new InterfaceError('invalid result set metadata');
     }
 
-    for (
-      let i = 0;
-      i < this.currentResultSet.metadata.partitionInfo.length;
-      i++
-    ) {
-      let p = this.currentResultSet.metadata.partitionInfo[i];
-      if (rowIdx < p.rowCount) {
-        return [rowIdx, i];
+    // Iteration only moves forward. Retain the global start of the last
+    // fetched partition so each row skips metadata already traversed.
+    let partitionRow = rowIdx - this.currentPartitionStart;
+    for (let i = this.currentPartitionIdx; i < partitions.length; i++) {
+      const rowCount = partitions[i].rowCount;
+      if (partitionRow < rowCount) {
+        return [partitionRow, i, rowIdx - partitionRow];
       }
-      rowIdx = rowIdx - p.rowCount;
+      partitionRow -= rowCount;
     }
-    return [-1, -1];
+    return [-1, -1, 0];
   }
 }
